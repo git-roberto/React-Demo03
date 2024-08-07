@@ -2,6 +2,12 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 
 function Contato() {
+
+    const flgLogin = (value) => {
+        const isLogado = value;
+        localStorage.setItem("isLogado", JSON.stringify(isLogado));
+    };
+
     return (
         <div className="bg-white">
             <header className="absolute inset-x-0 top-0 z-50">
@@ -40,11 +46,11 @@ function Contato() {
                     </div>
                     <div className="hidden lg:flex lg:gap-x-12">
                         <Link className="text-sm font-semibold leading-6 text-gray-900" to="/">Início</Link>
-                        <Link className="text-sm font-semibold leading-6 text-gray-900" to="/produto">Produtos</Link>
-                        <Link className="text-sm font-semibold leading-6 text-gray-900" to="/contato">Contato</Link>
+                        <Link className="text-sm font-semibold leading-6 text-gray-900" onClick={() => flgLogin(false)} to="/produto">Produtos</Link>
+                        <Link className="text-sm font-semibold leading-6 text-gray-900" onClick={() => flgLogin(false)} to="/contato">Contato</Link>
                     </div>
                     <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-                        <Link className="text-sm font-semibold leading-6 text-gray-900" to="/login">Login <span aria-hidden="true">&rarr;</span></Link>
+                        <Link className="text-sm font-semibold leading-6 text-gray-900" to="/login" onClick={() => flgLogin(true)}>Login <span aria-hidden="true">&rarr;</span></Link>
                     </div>
                 </nav>
                 <div className="lg:hidden" role="dialog" aria-modal="true">

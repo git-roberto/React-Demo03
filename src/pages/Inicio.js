@@ -1,7 +1,24 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 
 function Inicio() {
+
+  const flgLogin = (value) => {
+    const isLogado = value;
+    localStorage.setItem("isLogado", JSON.stringify(isLogado));
+  };
+
+  const [isLogado, setIsLogado] = useState('');
+
+  useEffect(() => {
+    var retorno = localStorage.getItem('isLogado');
+    if (retorno === "true") {
+      setIsLogado("EFETUE O LOGIN PARA MAIORES INFORMAÇÕES");
+    } else {
+      setIsLogado("");
+    }
+  }, []);
+
   return (
     <div className="bg-white">
       <header className="absolute inset-x-0 top-0 z-50">
@@ -40,11 +57,11 @@ function Inicio() {
           </div>
           <div className="hidden lg:flex lg:gap-x-12">
             <Link className="text-sm font-semibold leading-6 text-gray-900" to="/">Início</Link>
-            <Link className="text-sm font-semibold leading-6 text-gray-900" to="/produto">Produtos</Link>
-            <Link className="text-sm font-semibold leading-6 text-gray-900" to="/contato">Contato</Link>
+            <Link className="text-sm font-semibold leading-6 text-gray-900" onClick={() => flgLogin(false)} to="/produto">Produtos</Link>
+            <Link className="text-sm font-semibold leading-6 text-gray-900" onClick={() => flgLogin(false)} to="/contato">Contato</Link>
           </div>
           <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-            <Link className="text-sm font-semibold leading-6 text-gray-900" to="/login">Login <span aria-hidden="true">&rarr;</span></Link>
+            <Link className="text-sm font-semibold leading-6 text-gray-900" to="/login" onClick={() => flgLogin(true)}>Login <span aria-hidden="true">&rarr;</span></Link>
           </div>
         </nav>
         <div className="lg:hidden" role="dialog" aria-modal="true">
@@ -128,6 +145,9 @@ function Inicio() {
           </div>
           <div className="text-center">
             <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
+
+              <p>{isLogado}</p>
+
               Data to enrich your online business
             </h1>
             <p className="mt-6 text-lg leading-8 text-gray-600">
